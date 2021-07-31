@@ -52,4 +52,8 @@ public abstract class CatalogElement implements Element {
     protected CatalogTransaction tx() {
         return tx.getGraph().getCurrentThreadTx();
     }
+
+    public Map<String, Object> getProperties() {
+        return properties;
+    }
 }

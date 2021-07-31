@@ -16,7 +16,7 @@ public interface CatalogTransaction {
 
     Iterator<Vertex> vertices(Object... vertexIds);
 
-    Iterator<Edge> edges(Object... edges);
+    Iterator<Edge> edges(Object... edgeIds);
 
     void commit();
 

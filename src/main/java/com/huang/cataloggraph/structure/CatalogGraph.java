@@ -84,6 +84,10 @@ public class CatalogGraph implements Graph {
         return transaction.isOpen() ? transaction : getAutoStartTx();
     }
 
+    Set<CatalogTransaction> getOpenTransactions() {
+        return openTransactions;
+    }
+
     public Vertex addVertex(Object... keyValues) {
         return getAutoStartTx().addVertex(keyValues);
     }
@@ -120,7 +124,7 @@ public class CatalogGraph implements Graph {
         return null;
     }
 
-    public Configuration configuration() {
+    public CatalogConfiguration configuration() {
         return configuration;
     }
 
