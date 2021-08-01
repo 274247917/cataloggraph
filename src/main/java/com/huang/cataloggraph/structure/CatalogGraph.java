@@ -88,6 +88,10 @@ public class CatalogGraph implements Graph {
         return openTransactions;
     }
 
+    public ElasticSearchClient getClient() {
+        return client;
+    }
+
     public Vertex addVertex(Object... keyValues) {
         return getAutoStartTx().addVertex(keyValues);
     }

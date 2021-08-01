@@ -1,5 +1,6 @@
 package com.huang.cataloggraph.structure;
 
+import com.huang.cataloggraph.query.CatalogEsVertexQuery;
 import org.apache.tinkerpop.gremlin.structure.Direction;
 import org.apache.tinkerpop.gremlin.structure.Edge;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
@@ -32,12 +33,14 @@ public class CatalogVertex extends CatalogElement implements Vertex {
 
     @Override
     public Iterator<Edge> edges(Direction direction, String... edgeLabels) {
-        return null;
+        CatalogEsVertexQuery query = new CatalogEsVertexQuery(this, tx);
+        return (Iterator) query.direction(direction).label(edgeLabels).edges().getStream().iterator();
     }
 
     @Override
     public Iterator<Vertex> vertices(Direction direction, String... edgeLabels) {
-        return null;
+        CatalogEsVertexQuery query = new CatalogEsVertexQuery(this, tx);
+        return (Iterator) query.direction(direction).label(edgeLabels).vertices().getStream().iterator();
     }
 
     @Override
