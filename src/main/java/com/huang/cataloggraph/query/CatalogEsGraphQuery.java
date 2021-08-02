@@ -200,7 +200,11 @@ public class CatalogEsGraphQuery implements CatalogGraphQuery {
 
     private void addQueryBuilder(QueryBuilder queryBuilder) {
         if (builder.query() == null) {
-            builder.query(queryBuilder);
+            if (queryBuilder instanceof BoolQueryBuilder) {
+                builder.query(QueryBuilders.boolQuery().must(queryBuilder));
+            } else {
+                builder.query(queryBuilder);
+            }
         } else {
             if (!(builder.query() instanceof BoolQueryBuilder)) {
                 builder.query(QueryBuilders.boolQuery().must(builder.query()));

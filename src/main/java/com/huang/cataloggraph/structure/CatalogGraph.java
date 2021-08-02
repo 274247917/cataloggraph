@@ -1,6 +1,8 @@
 package com.huang.cataloggraph.structure;
 
 import com.huang.cataloggraph.config.CatalogConfiguration;
+import com.huang.cataloggraph.query.CatalogEsGraphQuery;
+import com.huang.cataloggraph.query.CatalogGraphQuery;
 import org.apache.commons.configuration.Configuration;
 import org.apache.tinkerpop.gremlin.process.computer.GraphComputer;
 import org.apache.tinkerpop.gremlin.structure.Edge;
@@ -81,7 +83,7 @@ public class CatalogGraph implements Graph {
             throw new IllegalStateException("Graph has been closed");
         }
         CatalogTransaction transaction = tx.get();
-        return transaction.isOpen() ? transaction : getAutoStartTx();
+        return (transaction != null && transaction.isOpen()) ? transaction : getAutoStartTx();
     }
 
     Set<CatalogTransaction> getOpenTransactions() {
@@ -90,6 +92,10 @@ public class CatalogGraph implements Graph {
 
     public ElasticSearchClient getClient() {
         return client;
+    }
+
+    public CatalogGraphQuery query() {
+        return new CatalogEsGraphQuery((CatalogEsTransaction) getCurrentThreadTx());
     }
 
     public Vertex addVertex(Object... keyValues) {
